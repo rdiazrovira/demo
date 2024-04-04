@@ -15,13 +15,19 @@ Now, let's move on.
 
 In your GoPath, create an “example” directory, and an “app” subdirectory.
 
-Next, create a “main.go” in the “app” directory.
+Create a “main.go” in the “app” directory.
 
 <img src="assets/images/main.png" alt="main.go" width="400"/></br>
 
-Then, create a Dockerfile.
+Create a Dockerfile.
 
 <img src="assets/images/dockerfile.png" alt="dockerfile" width="400"/></br>
+
+Then, create a ".github/workflows" directory. The directory must have this exact name in order for Github to detect any Github Actions workflows that it contains.
+
+In the ".github/workflows" directory, create a file with the ".yml" extension.
+
+<img src="assets/images/linting.png" alt="dockerfile" width="400"/></br>
 
 And finally, enable dependency tracking, with the following command:
 
