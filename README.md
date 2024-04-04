@@ -1,6 +1,6 @@
 **Deploying a Go Application to Google Cloud**
 
-For businesses, maintaining competitiveness and productivity is paramount. When embarking on application development, efficiency in scaling, cost reduction, rapid innovation, and ensuring reliability and security are top priorities. For Go developers, Google Cloud Platform (GCP) offers a comprehensive suite of tools and services tailored for deploying and managing applications.
+For businesses, maintaining competitiveness and productivity is paramount. When embarking on application development, efficiency in scaling, cost reduction, rapid innovation, and ensuring reliability and security are top priorities. For Go developers, Google Cloud Platform (GCP) offers a comprehensive suite of tools and services tailored for deploying and managing applications efficiently.
 
 In this post, I'll show you how to set up a Go application using Cloud Build, ensuring that changes to your source repository are automatically built into container images in Artifact Registry and deployed to Cloud Run.
 
@@ -33,7 +33,7 @@ So, to begin with, you need:
 
 In your GoPath, create an “example/app” directory.
 
-In the “app” directory, create a “main.go”.
+In the "example/app" directory, create a new file named “main.go”, and paste the following code into it:
 
 ```go
 package main
@@ -49,16 +49,9 @@ func main() {
     log.Print("starting server...")
     http.HandleFunc("/", handler)
 
-    // Determine port for HTTP service.
-    port := os.Getenv("PORT")
-    if port == "" {
-        port = "8080"
-        log.Printf("defaulting to port %s", port)
-    }
-
     // Start HTTP server.
-    log.Printf("listening on port %s", port)
-    if err := http.ListenAndServe(":"+port, nil); err != nil {
+    log.Print("listening on port 8080")
+    if err := http.ListenAndServe(":8080", nil); err != nil {
         log.Fatal(err)
     }
 }
@@ -68,7 +61,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-In the “app” directory, create a Dockerfile.
+As you can see, the previous code creates a basic web server that listens on the port 8080.
+
+Once we're done with the go code, let's add a new file named "Dockerfile", and paste the following content into in:
 
 ```dockerfile
 # Use the official Go image as the base image
@@ -93,9 +88,13 @@ RUN go build -o main .
 CMD ["./main"]
 ```
 
-Then, create a ".github/workflows" directory. The directory must have this exact name in order for Github to detect any Github Actions workflows that it contains.
+This is done to containerize the Golang application.
 
-In the ".github/workflows" directory, create a file with the ".yml" extension.
+Then, let's use the Github Actions to automate repetitive tasks. In this case, I'll just add an action to check the code quality.
+
+To get this part done, in the "example/app" directory, create a ".github/workflows" directory. The directory must have this exact name in order for Github to detect any Github Actions workflows that it contains.
+
+In the ".github/workflows" directory, create a file with the ".yml" extension, and paste the following content into in:
 
 ```yaml
 name: Linting
@@ -120,9 +119,11 @@ jobs:
           bin/golangci-lint run
 ```
 
-And finally, enable dependency tracking, with the following command:
+Finally, enable dependency tracking, with the following command:
 
     go mod init example/app
+
+Now, the sample app is ready to be pushed into the repository, and deployed.
 
 **Step 2: Creating a repository**
 
@@ -143,7 +144,7 @@ Now, from your local machine, create a new repository, with the following comman
 
 In Cloud Run, create a service.
 
-Set a name, and description.
+Set a name and description.
 
 Choose the option “Github - Continuously deploy from a repository.”
 
