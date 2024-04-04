@@ -157,6 +157,10 @@ Now, you only need to wait a few minutes until the deployment is completed.
 
 **Conclusion**
 
-...
-
-Thanks for reading!
+Once the service is created, a first deployment is done automatically.</br>
+The URL of the application will be visible in the "Cloud Run Service Details" screen.</br>
+Each change pushed to the "main" branch into the Github repository will trigger an action that runs linters to look for issues in the Go code. This is why you had implemented "Github Actions" that is a continuous integration and continuos delivery (CI/CD) platform.</br>
+Every change pushed to the "main" branch will trigger a new deployment, so you probably want to add some restrictions here to manage a bit better when a new version of your application should be deployed.
+</br>
+This is just a small sample of all you could do with Go, and technologies like "Google Cloud", "Docker", and "Github".</br>
+Nothing more to add for the moment, thanks for reading!
