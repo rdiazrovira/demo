@@ -1,21 +1,37 @@
-**Deploy a Go Application to Google Cloud**
+**Deploying a Go Application to Google Cloud**
 
 In this post, I'll show you how to set up a Go application using Cloud Build, ensuring that changes to your source repository are automatically built into container images in Artifact Registry and deployed to Cloud Run.
 
+**Before proceeding**
+
+Let's address a question you may have: What are the benefits of deploying applications to Google Cloud Run?
+
+The following are some of the ones I would highlight:
+
+- **Fully Managed Serverless Platform:** Cloud Run provides a fully managed serverless environment, freeing you from the infrastructure management. This allows you to focus on developing and deploying your applications.
+
+- **Containerized Workloads:** Cloud Run supports containerized workloads, which gives you flexibility and portability in how you build and deploy your applications.
+
+- **Automatic Scaling:** Cloud Run automatically scales your applications based on incoming requests, which can help you save on costs by only paying for resources when they're in use.
+
+- **Pay-per-use Billing:** It means you only pay for the resources your application consumes, billed by the number of requests and the duration of each request.
+
+**Keep in mind**
+
 At the conclusion of this post, assuming you are going to diligently follow each step, you should have set up a Google Cloud Platform project, a service, and a GitHub repository to host your Go codebase.
 
-So, have into account that you need:
-- Go installed.
-- Project on Google Cloud Platform.
-- Billing account for your project.
+So, to begin with, you need:
+- **Go installed.**
+- **Project on Google Cloud Platform.**
+- **Billing account for your project.**
 
-Now, let's move on.
+**Let's move on**
 
-**Writing a Go app**
+**Step 1: Writing a Golang app**
 
-In your GoPath, create an “example” directory, and an “app” subdirectory.
+In your GoPath, create an “example/app” directory.
 
-Create a “main.go” in the “app” directory.
+In the “app” directory, create a “main.go”.
 
 ```go
 package main
@@ -50,8 +66,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-
-Create a Dockerfile.
+In the “app” directory, create a Dockerfile.
 
 ```dockerfile
 # Use the official Go image as the base image
@@ -107,7 +122,7 @@ And finally, enable dependency tracking, with the following command:
 
     go mod init example/app
 
-**Creating a repository**
+**Step 2: Creating a repository**
 
 Create a Github repository.
 
@@ -122,7 +137,7 @@ Now, from your local machine, create a new repository, with the following comman
     git remote add origin https://github.com/[account_name]/[repository_name].git
     git push -u origin main
 
-**Creating a service**
+**Step 3: Creating a service**
 
 In Cloud Run, create a service.
 
@@ -140,4 +155,8 @@ That's all.
 
 Now, you only need to wait a few minutes until the deployment is completed.
 
-Thanks for reading.
+**Conclusion**
+
+...
+
+Thanks for reading!
