@@ -17,17 +17,91 @@ In your GoPath, create an “example” directory, and an “app” subdirectory
 
 Create a “main.go” in the “app” directory.
 
-<img src="assets/images/main.png" alt="main.go" width="400"/></br>
+```go
+package main
+
+import (
+    "fmt"
+    "log"
+    "net/http"
+    "os"
+)
+
+func main() {
+    log.Print("starting server...")
+    http.HandleFunc("/", handler)
+
+    // Determine port for HTTP service.
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080"
+        log.Printf("defaulting to port %s", port)
+    }
+
+    // Start HTTP server.
+    log.Printf("listening on port %s", port)
+    if err := http.ListenAndServe(":"+port, nil); err != nil {
+        log.Fatal(err)
+    }
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "Hello World!")
+}
+```
+
 
 Create a Dockerfile.
 
-<img src="assets/images/dockerfile.png" alt="dockerfile" width="400"/></br>
+```dockerfile
+# Use the official Go image as the base image
+FROM golang:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the Go module files
+COPY go.mod ./
+
+# Download the dependencies
+RUN go mod download
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the Go application
+RUN go build -o main .
+
+# Set the entry point command to run the built binary
+CMD ["./main"]
+```
 
 Then, create a ".github/workflows" directory. The directory must have this exact name in order for Github to detect any Github Actions workflows that it contains.
 
 In the ".github/workflows" directory, create a file with the ".yml" extension.
 
-<img src="assets/images/linting.png" alt="dockerfile" width="400"/></br>
+```yaml
+name: Linting
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Go Linting
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.57.2
+          bin/golangci-lint --version
+          bin/golangci-lint run
+```
 
 And finally, enable dependency tracking, with the following command:
 
