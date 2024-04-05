@@ -63,7 +63,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 As you can see, the previous code creates a basic web server that listens on the port 8080.
 
-Once we're done with the go code, let's add a new file named "Dockerfile", and paste the following content into in:
+Once you're done with the go code, add a new file named "Dockerfile", and paste the following content into in:
 
 ```dockerfile
 # Use the official Go image as the base image
