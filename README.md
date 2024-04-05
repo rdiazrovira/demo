@@ -127,9 +127,9 @@ Now, the sample app is ready to be pushed into the repository, and deployed.
 
 **Step 2: Creating a repository**
 
-Create a Github repository.
+Log into "Github", and create a Github repository.
 
-Now, from your local machine, create a new repository, with the following commands:
+From your local machine, create a new repository, with the following commands:
 
     cd example/app
     echo "# repository name" >> README.md
@@ -142,17 +142,17 @@ Now, from your local machine, create a new repository, with the following comman
 
 **Step 3: Creating a service**
 
-In Cloud Run, create a service.
+Log into "Google Cloud Console", go to "Google Run" through the navigation menu, and click "Create Service".
 
-Set a name and description.
+Next, choose the option “Github - Continuously deploy from a repository.”, and click "Set up with cloud build".
 
-Choose the option “Github - Continuously deploy from a repository.”
+In the "Set up with Cloud Build" screen, choose the repository you have created previously, choose the branch on which the deployments will be based, choose "Dockerfile" as your "Build Type", and set the source location, and click  "Save".
 
-Set up with Cloud Build.
+<img src="assets/images/setup-cloud-build.png" alt="Setup Cloud Build" width="350"/></br>
 
-- Choose the repository you have created previously.
-- Choose a branch.
-- And choose “Dockerfile” as your “Build Type”, and set the source location.
+Finally, define a service name and description, choose an authentication option, and click "Create".
+
+<img src="assets/images/create-service.png" alt="Create Service" width="300"/></br>
 
 That's all.
 
